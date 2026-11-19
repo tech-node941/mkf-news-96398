@@ -126,66 +126,68 @@ class Img:
 def draw(img):
     m = 18
     img.rect(0, 0, W, H, PAPER)
-    img.rect(0, 0, W, 6, DARK)
-    img.rect(0, 6, W, 2, GOLD)
-    img.rect(0, H - 24, W, 24, DARK)
+    img.rect(0, 0, W, 8, DARK)
+    img.rect(0, 8, W, 2, GOLD)
+    img.rect(0, H - 26, W, 26, DARK)
+    img.rect(0, H - 26, W, 1, GOLD)
 
-    img.text(m, 18, "THURSDAY, NOVEMBER 19, 2026", RED, 2)
-    img.text(W - m - len("VOL. 1 - NO. 320") * 6, 20, "VOL. 1 - NO. 320", GREY, 1)
+    # dateline
+    img.text(m, 20, "THURSDAY, NOVEMBER 19, 2026", RED, 2)
+    img.text(W - m - len("VOL. 1 - NO. 320") * 6, 22, "VOL. 1 - NO. 320", GREY, 1)
 
-    img.rect(0, 44, W, 86, DARK)
-    img.text_center(W // 2, 52, "WORLD NEWS", PAPER, 7)
-    img.text_center(W // 2, 112, "GLOBAL DISPATCH  *  19 NOVEMBER 2026", GOLD, 1)
+    # masthead
+    img.rect(0, 46, W, 84, DARK)
+    img.rect(0, 46, W, 2, GOLD)
+    img.text_center(W // 2, 54, "WORLD NEWS", PAPER, 7)
+    img.text_center(W // 2, 112, "GLOBAL DISPATCH  *  19 NOVEMBER 2026  *  FINAL EDITION", GOLD, 1)
     img.rect(m, 136, W - 2 * m, 3, INK)
     img.rect(m, 142, W - 2 * m, 1, GREY)
 
+    # top story with kicker
     y = 158
-    img.text(m, y, "TOP STORY", RED, 2)
-    img.rect(m + 94, y + 3, 60, 2, RED)
-    img.text(W - m - 104, y, "MUST READ", RED, 2)
+    img.rect(m, y - 2, 92, 16, RED)
+    img.text(m + 5, y, "TOP STORY", PAPER, 1)
+    img.text(W - m - 104, y - 2, "MUST READ", RED, 2)
     img.rect(W - m - 154, y + 3, 50, 2, RED)
     y += 26
     img.text(m, y, "GRAND THEFT AUTO VI", DARK, 5)
     y += 44
     img.text(m, y, "CONSOLES SELL OUT ON LAUNCH DAY", DARK, 3)
-    y += 22
-    img.text(m, y, "GAMERS QUEUE WORLDWIDE AS ROCKSTAR BLOCKBUSTER HITS STORES AT MIDNIGHT", INK, 2)
+    y += 24
+    img.text(m, y, "MIDNIGHT QUEUES CIRCLE CITY BLOCKS AS ROCKSTAR BLOCKBUSTER FINALLY GOES ON SALE", INK, 2)
     y += 20
-    img.text(m, y, "Retailers report record pre-orders; servers strain under launch demand.", GREY, 1)
+    img.text(m, y, "Record pre-orders strain retailer servers; analyscall it the biggest entertainment launch ever.", GREY, 1)
     y += 16
     img.rect(m, y, W - 2 * m, 2, INK)
-    return y + 2
+    return y + 6
 def body(img, y):
     m = 18
     col_w = 320
-    gap = 24
+    gap = 16
+    bh = 174
     boxes = [
-        ("WORLD", "CLIMATE SUMMIT", ["Delegates reach tentative deal", "on emissions timeline as talks", "enter final hours; island states", "demand faster cuts."], RED),
-        ("MARKETS", "GLOBAL STOCKS MIXED", ["Indexes waver as traders weigh", "rate outlook; tech shares slip", "while energy and defense names", "hold steady."], DARK),
-        ("TECH / AI", "AI DEALS RESHAPE TECH", ["Fresh data-center investments", "signal an AI infrastructure race,", "while regulators circle big", "chip and cloud mergers."], DARK),
-        ("SPORTS", "CHAMPIONS LEAGUE", ["Stunning comeback in Europe:", "late goals flip the tie and send", "the underdogs through to the", "knockout round."], DARK),
-        ("BUSINESS", "OIL HOLDS NEAR $79", ["Crude steadies as supply worries", "offset demand fears; gold sets", "a fresh record while the dollar", "softens against the euro."], DARK),
-        ("CULTURE", "GTA VI BREAKS RECORDS", ["Launch-day sales top forecasts;", "study finds 1 in 3 gamers took", "the day off, as midnight queues", "circle city blocks worldwide."], RED),
+        ("WORLD", "CLIMATE SUMMIT DEAL", ["Delegates reach tentative pact on", "emissions timeline as talks enter", "final hours; island states demand", "faster cuand more funding."], RED),
+        ("MARKETS", "GLOBAL STOCKS MIXED", ["Indexes waver as traders weigh", "the rate outlook; tech shares slip", "while energy and defense names", "hold steady into the close."], DARK),
+        ("TECH / AI", "AI RACE RESHAPES TECH", ["Fresh data-center investment signals", "an AI infrastructure race, while", "regulators circle big chip and", "cloud mergers on two continents."], DARK),
+        ("SPORTS", "CHAMPIONS LEAGUE", ["Stunning comeback in Europe: late", "goals flip the tie and send the", "underdogs through to the knockout", "round in front of a roaring crowd."], DARK),
+        ("BUSINESS", "OIL NEAR $79, GOLD RECORD", ["Crude steadies as supply worries", "offset demand fears; gold sea", "fresh record while the dollar", "softens against the euro."], DARK),
+        ("CULTURE", "GTA VI SMASHES RECORDS", ["Launch-day sales top forecasts;", "survey finds 1 in 3 gamers took", "the day off as midnight queues", "circle blocks in 40 cities."], RED),
     ]
-    x0 = m
-    y0 = y
-    bh = 136
-    for i, (tag, head, body_lines, accent) in enumerate(boxes):
-        col = i % 3
-        row = i // 3
+    x0, y0 = m, y
+    for i, (tag, head, lines, accent) in enumerate(boxes):
+        col, row = i % 3, i // 3
         x = x0 + col * (col_w + gap)
-        yy = y0 + row * (bh + 14)
+        yy = y0 + row * (bh + 12)
         img.rect(x, yy, col_w, bh, WHITE)
         img.frame(x, yy, col_w, bh, INK, 1)
-        img.rect(x, yy, col_w, 16, accent)
-        img.text(x + 5, yy + 5, tag, WHITE, 1)
+        img.rect(x, yy, col_w, 15, accent)
+        img.text(x + 5, yy + 4, tag, WHITE, 1)
         img.text(x + 8, yy + 22, head, DARK, 2)
         img.rect(x + 8, yy + 38, col_w - 16, 1, GREY)
-        for j, ln in enumerate(body_lines):
-            img.text(x + 8, yy + 44 + j * 13, ln, INK, 1)
-        img.text(x + 8, yy + bh - 16, "PAGE 4  *  CONT. P. 7", GREY, 1)
-    return y0 + 2 * (bh + 14)
-
+        for j, ln in enumerate(lines):
+            img.text(x + 8, yy + 46 + j * 14, ln, INK, 1)
+        img.text(x + 8, yy + bh - 17, "PAGE 4  *  CONT. P. 7", GREY, 1)
+    return y0 + 2 * (bh + 12)
 def footer(img, y):
     m = 18
     img.rect(m, y + 4, W - 2 * m, 2, INK)
